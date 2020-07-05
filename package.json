@@ -1,16 +1,17 @@
 {
-  "name": "Linkedin",
+  "name": "linkedin",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Thiago Andrade Silva",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "nodemon": "^2.0.4",
     "puppeteer": "^5.0.0"
   }
 }
