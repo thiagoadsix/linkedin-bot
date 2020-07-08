@@ -5,13 +5,21 @@ module.exports = class BotMessagesService {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    await page.goto("https://www.linkedin.com/login");
+    await page.goto("https://www.linkedin.com/login", {
+      waitUntil: "networkidle2",
+    });
     await page.waitForSelector("#username");
     await page.type("#username", username);
     await page.type("#password", password);
     await page.click(".login__form_action_container");
     await page.waitForNavigation();
-    await page.screenshot({ path: './app/screenshots/example.png', fullPage: true });
+    await page.goto("https://www.linkedin.com/search/results/people/", {
+      waitUntil: "networkidle2",
+    });
+    await page.screenshot({
+      path: "./app/screenshots/example.png",
+      fullPage: true,
+    });
     await browser.close();
   }
-}
+};
