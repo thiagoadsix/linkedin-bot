@@ -9,7 +9,7 @@ router.get("/login", async (req, res) => {
     await botMessagesController.loginController(username, password)
     return res.json("Login was a success!");
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });
 

@@ -6,7 +6,7 @@ module.exports = class BotMessagesController {
     try {
       return await botMessagesService.login(username, passowrd);
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   }
 }
