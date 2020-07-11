@@ -20,9 +20,20 @@ module.exports = class BotMessagesService {
     });
     await page.mouse.click(1000, 72, { button: "left" });
     await page.waitFor(5000);
+
     await page.mouse.click(1050, 210, { button: "left" });
-    await page.keyboard.type("Itália");
-    await page.waitFor(5000);
+    await page.keyboard.type("Itália", { delay: 250 });
+    await page.waitFor(1500);
+    await page.mouse.click(1050, 250, { button: "left" });
+    await page.waitFor(1500);
+
+    await page.mouse.click(800, 535, { button: "left" });
+    await page.keyboard.type("Design", { delay: 250 });
+    await page.waitFor(1500);
+    await page.mouse.click(800, 560, { button: "left" });
+    await page.waitFor(1500);
+
+    // await page.keyboard.type("Itália");
     await page.mouse.click(1450, 75, { button: "left" });
     await page.waitFor(20000);
 
