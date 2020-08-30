@@ -24,4 +24,4 @@ The idea of this project, is to create a bot that could send messages to many us
 }
 
 #### An example of a photo where I am in this personal project:
-![alt text](/home/thiago/Studies/linkedin-bot/app/screenshots)
+<img src="https://github.com/thiagoadsix/linkedin-bot/blob/master/app/screenshots/example.png" width="1280" height="720">
