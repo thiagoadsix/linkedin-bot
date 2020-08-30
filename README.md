@@ -15,7 +15,7 @@ The idea of this project, is to create a bot that could send messages to many us
 
 > npm run dev
 
-#### To use the project, you must have the insomnia or the postman or whatever you wish use to make the requisition. Until now the project just could search users by one profession (Design) and one country (Italy), and this is not dynamically, yet.
+#### To use the project, it is necessary to have the insomnia or the postman or whatever you want to use to make the request. So far the project can only search for users by a profession (Design) and a country (Italy), and this is not yet dynamic, yet.
 > Route type: GET
 
 > {
