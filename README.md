@@ -22,3 +22,6 @@ The idea of this project, is to create a bot that could send messages to many us
     "username": "your user or email",
     "password": "your password"
 }
+
+#### An example of a photo where I am in this personal project:
+![alt text](/home/thiago/Studies/linkedin-bot/app/screenshots)
