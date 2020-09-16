@@ -6,7 +6,12 @@ router.get("/login", async (req, res) => {
   try {
     const username = await req.body.username;
     const password = req.body.password;
-    await botMessagesController.loginController(username, password)
+    const countries = req.body.countries;
+    await botMessagesController.principalController(
+      username,
+      password,
+      countries
+    );
     return res.json("Login was a success!");
   } catch (error) {
     console.log(error.message);
