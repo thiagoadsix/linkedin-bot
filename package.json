@@ -13,5 +13,10 @@
     "express": "^4.17.1",
     "nodemon": "^2.0.4",
     "puppeteer": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.0.2"
   }
 }
