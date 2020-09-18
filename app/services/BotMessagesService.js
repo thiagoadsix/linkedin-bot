@@ -1,95 +1,86 @@
-"use-strict";
+'use-strict'
 
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer')
 
 module.exports = class BotMessagesService {
-  async principal(username, password, countries) {
+  async principal(username, password, countries, sectors) {
     const browser = await puppeteer.launch({
       headless: false,
-      args: ["--disable-features=site-per-process"],
-      defaultViewport: { width: 1920, height: 1080 },
-    });
-    const page = await browser.newPage();
+      args: ['--disable-features=site-per-process'],
+      defaultViewport: { width: 2048, height: 1080 },
+    })
+    const page = await browser.newPage()
 
-    await page.goto("https://www.linkedin.com/login", {
-      waitUntil: "networkidle2",
-    });
+    await page.goto('https://www.linkedin.com/login', {
+      waitUntil: 'networkidle2',
+    })
 
-    await this._toMakeLogin({ page, username, password });
+    await this._toMakeLogin({ page, username, password })
 
-    await page.goto("https://www.linkedin.com/search/results/people/", {
-      waitUntil: "networkidle2",
-    });
+    await page.goto('https://www.linkedin.com/search/results/people/', {
+      waitUntil: 'networkidle2',
+    })
 
-    await this._goToFilters({ page });
+    await this._goToFilters({ page })
 
-    await this._manyFields({
-      countries,
-      page,
-      xPosition: 1050,
-      xxPosition: 1050,
-      yPosition: 210,
-      yyPosition: 250,
-    });
+    await (await this._nthEmberElement({ n: 16, page })).click()
+    await this._moreThanOne({ page, array: countries })
+    await this._screenshot({ page, fileName: 'countries' })
 
-    // ! Try to find a better solution for this situation (here we could use a if conditional)
-    await page.mouse.click(800, 535, { button: "left" });
-    await page.keyboard.type("Design", { delay: 250 });
-    await page.waitFor(1500);
-    await page.mouse.click(800, 560, { button: "left" });
-    await page.waitFor(1500);
+    await (await this._nthEmberElement({ n: 30, page })).click()
+    await this._moreThanOne({ page, array: sectors })
+    await this._screenshot({ page, fileName: 'sectors' })
 
-    await page.mouse.click(1450, 75, { button: "left" });
-    await page.waitFor(20000);
+    await browser.close()
+  }
 
-    // ! Try to find a solution for this situation
-    // await page.click("#ember324 > span");
-    // await page.waitForSelector("#ember424 > input[type=text]");
-    // await page.type("#ember424 > input[type=text]", "Itália");
-    // await page.keyboard.press("Enter");
-    // await page.click("#ember405 > span")
+  async _screenshot(params) {
+    const { page, fileName } = params
 
     await page.screenshot({
-      path: "./app/screenshots/example.png",
+      path: `./app/screenshots/example${fileName}.png`,
       fullPage: true,
-    });
-    await browser.close();
+    })
+  }
+
+  async _nthEmberElement(params) {
+    const { n, page } = params
+
+    return page.evaluateHandle(
+      n =>
+        Array.from(document.querySelectorAll('*')).filter(element =>
+          element.id.startsWith('ember')
+        )[n],
+      n
+    )
   }
 
   async _toMakeLogin(params) {
-    const { page, username, password } = params;
+    const { page, username, password } = params
 
-    await page.waitForSelector("#username");
-    await page.type("#username", username, { delay: 250 });
-    await page.waitFor(1500);
-    await page.type("#password", password, { delay: 250 });
-    await page.waitFor(1500);
-    await page.click(".login__form_action_container");
-    await page.waitForNavigation();
+    await page.waitForSelector('#username')
+    await page.type('#username', username, { delay: 250 })
+    await page.waitFor(1500)
+    await page.type('#password', password, { delay: 250 })
+    await page.waitFor(1500)
+    await page.click('.login__form_action_container')
+    await page.waitForNavigation()
   }
 
   async _goToFilters(params) {
-    const { page } = params;
-    await page.mouse.click(1000, 72, { button: "left" });
-    await page.waitFor(5000);
+    const { page } = params
+
+    await page.mouse.click(1000, 72, { button: 'left' })
+    await page.waitFor(5000)
   }
 
-  async _manyFields(params) {
-    const {
-      countries,
-      page,
-      xPosition,
-      xxPosition,
-      yPosition,
-      yyPosition,
-    } = params;
+  async _moreThanOne(params) {
+    const { page, array } = params
 
-    for (const element of countries) {
-      await page.mouse.click(xPosition, yPosition, { button: "left" });
-      await page.keyboard.type(element, { delay: 250 });
-      await page.waitFor(1500);
-      await page.mouse.click(xxPosition, yyPosition, { button: "left" });
-      await page.waitFor(1500);
+    for (const iterator of array) {
+      await page.keyboard.type(iterator, { delay: 500 })
+      await page.keyboard.press('ArrowDown')
+      await page.keyboard.press('Enter')
     }
   }
-};
+}
