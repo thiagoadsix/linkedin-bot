@@ -1,5 +1,7 @@
 'use-strict'
 
+// TODO: Why the page is been redirect to sign up?
+
 const puppeteer = require('puppeteer')
 
 module.exports = class BotMessagesService {
@@ -21,7 +23,9 @@ module.exports = class BotMessagesService {
       waitUntil: 'networkidle2',
     })
 
-    await this._goToFilters({ page })
+    await (await this._nthEmberElement({ n: 61, page })).click()
+    await page.waitFor(5000)
+    await this._screenshot({ page, fileName: 'filters' })
 
     await (await this._nthEmberElement({ n: 16, page })).click()
     await this._moreThanOne({ page, array: countries })
@@ -32,27 +36,6 @@ module.exports = class BotMessagesService {
     await this._screenshot({ page, fileName: 'sectors' })
 
     await browser.close()
-  }
-
-  async _screenshot(params) {
-    const { page, fileName } = params
-
-    await page.screenshot({
-      path: `./app/screenshots/example${fileName}.png`,
-      fullPage: true,
-    })
-  }
-
-  async _nthEmberElement(params) {
-    const { n, page } = params
-
-    return page.evaluateHandle(
-      n =>
-        Array.from(document.querySelectorAll('*')).filter(element =>
-          element.id.startsWith('ember')
-        )[n],
-      n
-    )
   }
 
   async _toMakeLogin(params) {
@@ -67,11 +50,16 @@ module.exports = class BotMessagesService {
     await page.waitForNavigation()
   }
 
-  async _goToFilters(params) {
-    const { page } = params
+  async _nthEmberElement(params) {
+    const { n, page } = params
 
-    await page.mouse.click(1000, 72, { button: 'left' })
-    await page.waitFor(5000)
+    return page.evaluateHandle(
+      n =>
+        Array.from(document.querySelectorAll('*')).filter(element =>
+          element.id.startsWith('ember')
+        )[n],
+      n
+    )
   }
 
   async _moreThanOne(params) {
@@ -82,5 +70,14 @@ module.exports = class BotMessagesService {
       await page.keyboard.press('ArrowDown')
       await page.keyboard.press('Enter')
     }
+  }
+
+  async _screenshot(params) {
+    const { page, fileName } = params
+
+    await page.screenshot({
+      path: `./app/screenshots/example${fileName}.png`,
+      fullPage: true,
+    })
   }
 }
