@@ -1,7 +1,5 @@
 'use-strict'
 
-// TODO: Why the page is been redirect to sign up?
-
 const puppeteer = require('puppeteer')
 
 module.exports = class BotMessagesService {
@@ -24,7 +22,9 @@ module.exports = class BotMessagesService {
     })
 
     await (await this._nthEmberElement({ n: 61, page })).click()
+
     await page.waitFor(5000)
+
     await this._screenshot({ page, fileName: 'filters' })
 
     await (await this._nthEmberElement({ n: 16, page })).click()
@@ -34,6 +34,11 @@ module.exports = class BotMessagesService {
     await (await this._nthEmberElement({ n: 30, page })).click()
     await this._moreThanOne({ page, array: sectors })
     await this._screenshot({ page, fileName: 'sectors' })
+
+    await page.waitFor(2000)
+
+    await (await this._nthEmberElement({ n: 5, page })).click()
+    await this._screenshot({ page, fileName: 'apply' })
 
     await browser.close()
   }
