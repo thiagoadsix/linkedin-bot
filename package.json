@@ -12,7 +12,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^2.0.4",
-    "puppeteer": "^5.0.0"
+    "puppeteer": "^5.0.0",
+    "puppeteer-firefox": "^0.5.1"
   },
   "devDependencies": {
     "eslint": "^7.9.0",
