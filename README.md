@@ -1,6 +1,5 @@
 # LinkedinBot
 
-## What is the project?
 The idea of this project, is to create a bot that could send messages to many user on Linkedin.
 
 ### Dependencies
